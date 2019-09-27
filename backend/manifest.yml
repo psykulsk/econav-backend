@@ -1,0 +1,7 @@
+applications:
+- name: econav-backend
+  memory: 128M
+  command: python econav.py
+  random-route: false
+  services:
+  - econav-backend
