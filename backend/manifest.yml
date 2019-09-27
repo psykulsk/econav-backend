@@ -3,5 +3,6 @@ applications:
   memory: 128M
   command: python econav.py
   random-route: false
+  stack: cflinuxfs3
   services:
   - econav-backend
