@@ -4,5 +4,7 @@ applications:
   command: python econav.py
   random-route: false
   stack: cflinuxfs3
+  env:
+    GOOGLE_DIRECTIONS_API_KEY: 0
   services:
   - econav-backend

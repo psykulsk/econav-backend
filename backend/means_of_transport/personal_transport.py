@@ -18,7 +18,7 @@ class PersonalTransport(object):
         return output_dict
 
     def to_str(self):
-        return f"type={self.type}|company={self.company}|lat={self.lat}|long={self.long}"
+        return f"type={TRANSPORT_TYPE_TO_OUTPUT_TYPE[self.type]}|company={self.company}|lat={self.lat}|long={self.long}"
 
     def __repr__(self):
         return self.to_str()
