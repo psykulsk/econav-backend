@@ -8,11 +8,11 @@ class PersonalTransport(object):
         self.long = long
         self.lat = lat
 
-    def get_json(self):
+    def get_output_dict(self):
         output_dict = {
             'type': self.type,
             'company': self.company,
             'long': self.long,
             'lat': self.lat
         }
-        return json.dumps(output_dict)
+        return output_dict
