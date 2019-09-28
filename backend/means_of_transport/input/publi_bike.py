@@ -12,7 +12,7 @@ PUBLI_BIKE_GET_ENDPOINT = \
 
 
 def publi_bike_to_personal_transport(publi_bike_station):
-    type = TRANSPORT_TYPE_TO_OUTPUT_TYPE[TransportType.BIKE]
+    type = TransportType.BIKE
     company = 'publi_bike'
     long = publi_bike_station["geometry"]["coordinates"][0]
     lat = publi_bike_station["geometry"]["coordinates"][1]

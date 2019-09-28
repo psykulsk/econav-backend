@@ -10,7 +10,7 @@ FLASH_GET_ENDPOINT = 'https://api.goflash.com/api/Mobile/Scooters'
 
 
 def flash_scooter_to_personal_transport(flash_scooter_response_data):
-    type = TRANSPORT_TYPE_TO_OUTPUT_TYPE[TransportType.E_SCOOTER]
+    type = TransportType.E_SCOOTER
     company = 'flash'
     lat = flash_scooter_response_data["location"]["latitude"]
     long = flash_scooter_response_data["location"]["longitude"]

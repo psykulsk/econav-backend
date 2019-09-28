@@ -1,3 +1,6 @@
+from means_of_transport.transport_type_mapping import TRANSPORT_TYPE_TO_OUTPUT_TYPE
+
+
 class PersonalTransport(object):
     def __init__(self, type, company, lat, long):
         self.type = type
@@ -7,7 +10,7 @@ class PersonalTransport(object):
 
     def get_output_dict(self):
         output_dict = {
-            'type': self.type,
+            'type': TRANSPORT_TYPE_TO_OUTPUT_TYPE[self.type],
             'company': self.company,
             'lat': self.lat,
             'long': self.long

@@ -10,13 +10,14 @@ from means_of_transport.functions import get_personal_transport_output_list
 app = Flask(__name__)
 
 
-
-
 @app.route('/neighbourhood')
 def neighbourhood():
     start_long = request.args.get('start_long', type=float)
     start_lat = request.args.get('start_lat', type=float)
-    personal_transport_output_list = get_personal_transport_output_list(start_long, start_lat)
+    personal_transport_output_list = get_personal_transport_output_list(
+        user_lat=start_lat,
+        user_long=start_long
+    )
     return jsonify(results=personal_transport_output_list)
 
 
