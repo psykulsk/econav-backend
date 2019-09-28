@@ -2,7 +2,7 @@ from math import cos, asin, sqrt
 
 from means_of_transport.input.flash import get_flash_scooters
 from means_of_transport.input.publi_bike import get_publi_bike_stations
-from means_of_transport.input.bird import get_bird_scooters
+from means_of_transport.input.bird import get_bird_from_dump
 from means_of_transport.input.mobility_mock import read_mobility_motor_scooters
 from transport_type import TransportType
 
@@ -11,7 +11,7 @@ def get_personal_transport_list(user_lat, user_long):
     personal_transport_list = []
     personal_transport_list.extend(get_flash_scooters(user_long=user_long, user_lat=user_lat))
     personal_transport_list.extend(get_publi_bike_stations())
-    # personal_transport_list.extend(get_bird_scooters(user_lat, user_long))
+    personal_transport_list.extend(get_bird_from_dump())
     personal_transport_list.extend(read_mobility_motor_scooters())
     return personal_transport_list
 

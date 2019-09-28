@@ -2,6 +2,7 @@ import requests
 import json
 import logging
 import uuid
+import os
 
 from means_of_transport.transport_type_mapping import TRANSPORT_TYPE_TO_OUTPUT_TYPE
 from transport_type import TransportType
@@ -28,6 +29,12 @@ GEO_ENDPOINT = "https://api.birdapp.com/bird/nearby"
 SEARCH_RADIUS = 1000
 
 
+
+BACKEND_BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BIRD_DUMP_PATH = os.path.join(BACKEND_BASE_DIR, "data", "bird.json")
+
+
+
 def renew_id():
     global BIRD_ID
     body = {"email": EMAIL}
@@ -39,7 +46,7 @@ def renew_id():
 
 
 # We want to renew ID once per request so we put it here in the global code
-# renew_id()
+# Not running the renewe on the server -> no permission
 
 
 def bird_scooter_to_personal_transport(bird_scooter):
@@ -50,7 +57,7 @@ def bird_scooter_to_personal_transport(bird_scooter):
     return PersonalTransport(type=type, company=company, long=long, lat=lat)
 
 
-def get_bird_scooters(user_lat, user_long):
+def get_bird_scooters_from_api(user_lat, user_long):
     location_dict = {
         "latitude": user_lat,
         "longitude": user_long,
@@ -86,19 +93,40 @@ def get_bird_scooters(user_lat, user_long):
         return []
     else:
         response_json = json.loads(response.text)
-        bird_scooter_list = response_json['birds']
-        personal_transport_list = []
-        for bird_scooter in bird_scooter_list:
-            personal_transport_list.append(
-                bird_scooter_to_personal_transport(bird_scooter)
-            )
-        return personal_transport_list
+        dump_bird(response_json)
+        return convert_response_to_personal_transport_list(response_json)
+
+
+def convert_response_to_personal_transport_list(response_json):
+    bird_scooter_list = response_json.get('birds', {})
+    personal_transport_list = []
+    for bird_scooter in bird_scooter_list:
+        personal_transport_list.append(
+            bird_scooter_to_personal_transport(bird_scooter)
+        )
+    return personal_transport_list
+
+
+def get_bird_from_dump():
+    historic_response_json = load_bird()
+    return convert_response_to_personal_transport_list(historic_response_json)
+
+
+def dump_bird(api_response_json):
+    with open(BIRD_DUMP_PATH, 'w') as bird_dump:
+        json.dump(api_response_json, bird_dump)
+
+
+def load_bird():
+    with open(BIRD_DUMP_PATH) as bird_dump:
+        return json.load(bird_dump)
 
 
 if __name__ == "__main__":
+    renew_id()
     hack_zurich_lat = 47.390229
     hack_zurich_long = 8.514694
-
-    # renew_id()
-    flash_scooters = get_bird_scooters(hack_zurich_lat, hack_zurich_long)
-    print(flash_scooters)
+    # bird_scooters = get_bird_scooters_from_api(hack_zurich_lat, hack_zurich_long)
+    # print(bird_scooters)
+    bird_scooters_dump = get_bird_from_dump()
+    print(bird_scooters_dump)

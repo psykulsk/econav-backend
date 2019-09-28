@@ -1,8 +1,4 @@
-import requests
-import json
-import random
 import csv
-import logging
 import os
 
 from transport_type import TransportType
