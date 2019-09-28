@@ -46,18 +46,24 @@ def renew_id():
 
 
 # We want to renew ID once per request so we put it here in the global code
-# Not running the renewe on the server -> no permission
+# Not running the renew on the server -> no permission
 
 
 def bird_scooter_to_personal_transport(bird_scooter):
     type = TransportType.E_SCOOTER
     company = 'bird'
-    lat = bird_scooter["location"]["latitude"]
-    long = bird_scooter["location"]["longitude"]
-    return PersonalTransport(type=type, company=company, long=long, lat=lat)
+    try:
+        lat = bird_scooter["location"]["latitude"]
+        long = bird_scooter["location"]["longitude"]
+        remaining_range_int = float(bird_scooter["estimated_range"])/1000.0
+    except(KeyError, ValueError, TypeError) as err:
+        return None
+
+    return PersonalTransport(type=type, company=company, long=long, lat=lat, remaining_range=remaining_range_int)
 
 
 def get_bird_scooters_from_api(user_lat, user_long):
+    renew_id()
     location_dict = {
         "latitude": user_lat,
         "longitude": user_long,
@@ -101,9 +107,9 @@ def convert_response_to_personal_transport_list(response_json):
     bird_scooter_list = response_json.get('birds', {})
     personal_transport_list = []
     for bird_scooter in bird_scooter_list:
-        personal_transport_list.append(
-            bird_scooter_to_personal_transport(bird_scooter)
-        )
+        pt = bird_scooter_to_personal_transport(bird_scooter)
+        if pt is not None:
+            personal_transport_list.append(pt)
     return personal_transport_list
 
 
@@ -123,7 +129,6 @@ def load_bird():
 
 
 if __name__ == "__main__":
-    renew_id()
     hack_zurich_lat = 47.390229
     hack_zurich_long = 8.514694
     # bird_scooters = get_bird_scooters_from_api(hack_zurich_lat, hack_zurich_long)

@@ -22,7 +22,7 @@ class PersonalTransport(object):
         return f"type={TRANSPORT_TYPE_TO_OUTPUT_TYPE[self.type]}" \
                f"|company={self.company}" \
                f"|lat={self.lat}|long={self.long}" \
-               f"|remaining_range={self.remaining_range}"
+               f"|remaining_range_km={self.remaining_range}"
 
     def __repr__(self):
         return self.to_str()
