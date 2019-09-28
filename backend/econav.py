@@ -10,12 +10,6 @@ from means_of_transport.functions import get_personal_transport_output_list
 app = Flask(__name__)
 
 
-class TransportType(enum.Enum):
-    E_BIKE = 0,
-    E_CAR = 1,
-    E_SCOOTER = 2,
-    BIKE = 3,
-    WALK = 4
 
 
 @app.route('/neighbourhood')
@@ -24,6 +18,16 @@ def neighbourhood():
     start_lat = request.args.get('start_lat', type=float)
     personal_transport_output_list = get_personal_transport_output_list(start_long, start_lat)
     return jsonify(results=personal_transport_output_list)
+
+
+@app.route('/directions')
+def directions():
+    start_long = request.args.get('start_long', type=float)
+    start_lat = request.args.get('start_lat', type=float)
+    end_long = request.args.get('end_long', type=float)
+    end_lat = request.args.get('end_lat', type=float)
+
+    return jsonify(results=[])
 
 
 @app.route('/')

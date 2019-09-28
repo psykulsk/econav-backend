@@ -2,7 +2,9 @@ import requests
 import json
 import logging
 
-from backend.means_of_transport.personal_transport import PersonalTransport
+from means_of_transport.personal_transport import PersonalTransport
+from means_of_transport.transport_type_mapping import TRANSPORT_TYPE_TO_OUTPUT_TYPE
+from transport_type import TransportType
 
 PUBLI_BIKE_GET_ENDPOINT = \
     'https://data.stadt-zuerich.ch/dataset/d8951db3-4df1-483d-af1e-b34211c63ee9/resource/' \
@@ -10,7 +12,7 @@ PUBLI_BIKE_GET_ENDPOINT = \
 
 
 def publi_bike_to_personal_transport(publi_bike_station):
-    type = 'bike'
+    type = TRANSPORT_TYPE_TO_OUTPUT_TYPE[TransportType.BIKE]
     company = 'publi_bike'
     long = publi_bike_station["geometry"]["coordinates"][0]
     lat = publi_bike_station["geometry"]["coordinates"][1]

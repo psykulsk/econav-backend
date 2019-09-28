@@ -1,7 +1,7 @@
 import requests
 import json
 import logging
-from backend.econav import TransportType
+from transport_type import TransportType
 
 CLIMATE_PARTNER_CALC_ENDPOINT = "https://climate-api-test.dakar.moccu.net/api/calculate"
 API_KEY = "2947ee2d-bca1-4bc4-aa81-017ca40cb5b3"
@@ -10,7 +10,7 @@ HEADER = {'X-Api-Key': API_KEY}
 TRANSPORT_TYPE_TO_VEHICLE_TYPE = {
     TransportType.BIKE: "normal_bike",
     TransportType.E_BIKE: "e-bike",
-    TransportType.E_CAR: "electric_cat",
+    TransportType.E_CAR: "electric_car",
     TransportType.E_SCOOTER: "electric_scooter",
     TransportType.WALK: "walk"
 }
