@@ -8,7 +8,8 @@ TRANSPORT_TYPE_TO_GOOGLE_TRAVEL_MODE = {
     TransportType.E_BIKE: "bicycling",
     TransportType.E_CAR: "driving",
     TransportType.E_SCOOTER: "bicycling",
-    TransportType.WALK: "walking"
+    TransportType.WALK: "walking",
+    TransportType.MOTOR_SCOOTER: "motor_scooter"
 }
 
 

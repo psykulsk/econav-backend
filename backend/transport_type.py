@@ -7,3 +7,4 @@ class TransportType(enum.Enum):
     E_SCOOTER = 2,
     BIKE = 3,
     WALK = 4
+    MOTOR_SCOOTER = 5

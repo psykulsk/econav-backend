@@ -12,7 +12,8 @@ TRANSPORT_TYPE_TO_VEHICLE_TYPE = {
     TransportType.E_BIKE: "e-bike",
     TransportType.E_CAR: "electric_car",
     TransportType.E_SCOOTER: "electric_scooter",
-    TransportType.WALK: "walk"
+    TransportType.WALK: "walk",
+    TransportType.MOTOR_SCOOTER: "motor_scooter"
 }
 
 
