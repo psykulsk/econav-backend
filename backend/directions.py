@@ -42,7 +42,7 @@ TRANSPORT_TYPE_TO_CHF_PER_MINUTE = {
 
 
 def get_routes_for_transport_types(start_lat, start_long, end_lat, end_long):
-    closest_personal_transports = get_closest_personal_transports(start_lat, start_long)
+    closest_personal_transports = get_closest_personal_transports(start_lat, start_long, end_lat, end_long)
     personal_transport_full_route = []
     for personal_transport in closest_personal_transports:
         try:
@@ -77,7 +77,7 @@ def get_routes_for_transport_types(start_lat, start_long, end_lat, end_long):
             'route': transport_route.get('steps'),
             'cost': transport_route_cost,
             'carbon_footprint': transport_route_footprint_kg,
-            'time': walking_route_time_sec
+            'time': transport_route_time_sec
         }
         gas_carbon_footprint = get_transport_road_calc_5(3000, (
                 transport_route_distance_meters + walking_route_distance) / 1000.0)

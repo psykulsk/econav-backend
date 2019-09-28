@@ -52,11 +52,13 @@ def get_filtered_personal_transport_output_list(user_lat, user_long, radius):
                     get_filtered_personal_transport_list(user_lat=user_lat, user_long=user_long, radius=radius)))
 
 
-def get_closest_personal_transports(user_lat, user_long):
+def get_closest_personal_transports(user_lat, user_long, dest_lat, dest_long):
     """
     Returns a list of closest available personal transports
     :param user_lat:
     :param user_long:
+    :param dest_lat:
+    :param dest_long:
     :return:
     """
     personal_transport_list = get_personal_transport_list(user_lat, user_long)
@@ -65,6 +67,12 @@ def get_closest_personal_transports(user_lat, user_long):
                                    TransportType}
 
     for personal_transport in personal_transport_list:
+        abs_distance_from_vehicle_to_dest = abs(distance(dest_lat, dest_long,
+                                                         personal_transport.lat,
+                                                         personal_transport.long))
+        if personal_transport.remaining_range is not None:
+            if abs_distance_from_vehicle_to_dest > personal_transport.remaining_range:
+                continue
         abs_distance = abs(distance(user_lat, user_long,
                                     personal_transport.lat,
                                     personal_transport.long))
