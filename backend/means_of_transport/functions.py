@@ -14,7 +14,7 @@ def get_personal_transport_list(user_lat, user_long):
 
 def get_personal_transport_output_list(user_lat, user_long):
     return list(map(lambda personal_transport: personal_transport.get_output_dict(),
-                    get_personal_transport_list(user_long, user_lat)))
+                    get_personal_transport_list(user_lat=user_lat, user_long=user_long)))
 
 
 def get_closest_personal_transports(user_lat, user_long):
