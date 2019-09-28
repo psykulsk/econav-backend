@@ -10,12 +10,12 @@ FLASH_GET_ENDPOINT = 'https://api.goflash.com/api/Mobile/Scooters'
 def flash_scooter_to_personal_transport(flash_scooter_response_data):
     type = 'scooter'
     company = 'flash'
-    long = flash_scooter_response_data["location"]["longitude"]
     lat = flash_scooter_response_data["location"]["latitude"]
+    long = flash_scooter_response_data["location"]["longitude"]
     return PersonalTransport(type=type, company=company, long=long, lat=lat)
 
 
-def get_flash_scooters(user_long, user_lat):
+def get_flash_scooters(user_lat, user_long):
     response = requests.get(FLASH_GET_ENDPOINT, params={
         'userLatitude': user_lat,
         'userLongitude': user_long,
@@ -37,3 +37,11 @@ def get_flash_scooters(user_long, user_lat):
                 flash_scooter_to_personal_transport(flash_scooter_response_data)
             )
         return personal_transport_list
+
+
+if __name__ == "__main__":
+    hack_zurich_lat = 47.390229
+    hack_zurich_long = 8.514694
+
+    flash_scooters = get_flash_scooters(hack_zurich_lat, hack_zurich_long)
+    print(flash_scooters)
