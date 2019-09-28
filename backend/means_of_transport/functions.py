@@ -1,5 +1,5 @@
-from backend.means_of_transport.personal_transport import PersonalTransport
-from backend.means_of_transport.input.flash import get_flash_scooters
+from means_of_transport.personal_transport import PersonalTransport
+from means_of_transport.input.flash import get_flash_scooters
 
 
 def get_personal_transport_list(user_long, user_lat):

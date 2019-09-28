@@ -2,7 +2,7 @@ import requests
 import json
 import logging
 
-from backend.means_of_transport.personal_transport import PersonalTransport
+from means_of_transport.personal_transport import PersonalTransport
 
 FLASH_GET_ENDPOINT = 'https://api.goflash.com/api/Mobile/Scooters'
 

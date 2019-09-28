@@ -4,7 +4,7 @@ import enum
 
 from flask import Flask, request, jsonify
 
-from backend.means_of_transport.functions import get_personal_transport_output_list
+from means_of_transport.functions import get_personal_transport_output_list
 
 # Initialize Flask app
 app = Flask(__name__)
