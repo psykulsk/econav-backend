@@ -2,20 +2,24 @@ import os
 
 from flask import Flask, request, jsonify
 
-from means_of_transport.functions import get_personal_transport_output_list
+from means_of_transport.functions import get_filtered_personal_transport_output_list
 from directions import get_routes_for_transport_types
 
 # Initialize Flask app
 app = Flask(__name__)
+
+DEFAULT_RADIUS_KM = 2.0
 
 
 @app.route('/neighbourhood')
 def neighbourhood():
     start_long = request.args.get('start_long', type=float)
     start_lat = request.args.get('start_lat', type=float)
-    personal_transport_output_list = get_personal_transport_output_list(
+    radius = request.args.get('radius', type=float, default=DEFAULT_RADIUS_KM)
+    personal_transport_output_list = get_filtered_personal_transport_output_list(
         user_lat=start_lat,
-        user_long=start_long
+        user_long=start_long,
+        radius=radius
     )
     return jsonify(results=personal_transport_output_list)
 

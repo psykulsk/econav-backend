@@ -93,7 +93,6 @@ def get_routes_for_transport_types(start_lat, start_long, end_lat, end_long):
         }
         personal_transport_full_route.append(personal_transport_data)
 
-    # TODO add get_public_transport_route
     public_routes_list = get_public_transport_route(start_lat, start_long, end_lat, end_long)
     personal_transport_full_route.extend(public_routes_list)
     return personal_transport_full_route

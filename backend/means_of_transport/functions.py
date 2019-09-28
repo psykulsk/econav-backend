@@ -8,6 +8,12 @@ from transport_type import TransportType
 
 
 def get_personal_transport_list(user_lat, user_long):
+    """
+    Returns list of all available personal transports returned by APIs
+    :param user_lat:
+    :param user_long:
+    :return: list of PersonalTransport objects representing different means of personal transport.
+    """
     personal_transport_list = []
     personal_transport_list.extend(get_flash_scooters(user_long=user_long, user_lat=user_lat))
     personal_transport_list.extend(get_publi_bike_stations())
@@ -16,9 +22,34 @@ def get_personal_transport_list(user_lat, user_long):
     return personal_transport_list
 
 
-def get_personal_transport_output_list(user_lat, user_long):
+def get_filtered_personal_transport_list(user_lat, user_long, radius):
+    """
+    Returns a list of PublicTransport objects which are within the given radius from the user.
+    :param user_lat:
+    :param user_long:
+    :param radius:
+    :return:
+    """
+    personal_transport_list = get_personal_transport_list(user_lat, user_long)
+    filtered_list = []
+    for pt in personal_transport_list:
+        pt_lat = pt.lat
+        pt_long = pt.long
+        if distance(user_lat, user_long, pt_lat, pt_long) <= radius:
+            filtered_list.append(pt)
+    return filtered_list
+
+
+def get_filtered_personal_transport_output_list(user_lat, user_long, radius):
+    """
+    Returns a list of python dictionaries representing various means of personal transport.
+    :param user_lat:
+    :param user_long:
+    :param radius:
+    :return:
+    """
     return list(map(lambda personal_transport: personal_transport.get_output_dict(),
-                    get_personal_transport_list(user_lat=user_lat, user_long=user_long)))
+                    get_filtered_personal_transport_list(user_lat=user_lat, user_long=user_long, radius=radius)))
 
 
 def get_closest_personal_transports(user_lat, user_long):
@@ -28,12 +59,6 @@ def get_closest_personal_transports(user_lat, user_long):
     :param user_long:
     :return:
     """
-    def distance(lat1, lon1, lat2, lon2):
-        p = 0.017453292519943295  # Pi/180
-        a = 0.5 - cos((lat2 - lat1) * p) / 2 + cos(lat1 * p) * cos(lat2 * p) * (
-                1 - cos((lon2 - lon1) * p)) / 2
-        return 12742 * asin(sqrt(a))  # 2*R*asin...
-
     personal_transport_list = get_personal_transport_list(user_lat, user_long)
     # initialize dict with infinite distance value for each transport type
     closest_personal_transports = {transport_type: (None, float("inf")) for transport_type in
@@ -51,7 +76,18 @@ def get_closest_personal_transports(user_lat, user_long):
             personal_transport is not None]
 
 
+def distance(lat1, lon1, lat2, lon2):
+    p = 0.017453292519943295  # Pi/180
+    a = 0.5 - cos((lat2 - lat1) * p) / 2 + cos(lat1 * p) * cos(lat2 * p) * (
+            1 - cos((lon2 - lon1) * p)) / 2
+    return 12742 * asin(sqrt(a))  # 2*R*asin...
+
+
 if __name__ == '__main__':
-    out = get_closest_personal_transports(47.3, 8.55)
-    print(out)
+    hack_zurich_lat = 47.390229
+    hack_zurich_long = 8.514694
+    personal_transport = get_personal_transport_list(hack_zurich_lat, hack_zurich_long)
+    print(personal_transport)
+    closest_personal_transport = get_closest_personal_transports(hack_zurich_lat, hack_zurich_long)
+    print(closest_personal_transport)
     pass
