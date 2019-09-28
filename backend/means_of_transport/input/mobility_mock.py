@@ -3,6 +3,7 @@ import json
 import random
 import csv
 import logging
+import os
 
 from transport_type import TransportType
 from means_of_transport.personal_transport import PersonalTransport
@@ -14,8 +15,8 @@ MIN_LONG = 8.497557
 MAX_LONG = 8.564475
 SEED = 42
 
-
-DATA_PATH = "../../data/mobility.csv"
+BACKEND_BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+DATA_PATH = os.path.join(BACKEND_BASE_DIR, "data", "mobility.csv")
 
 
 def read_mobility_motor_scooters():
@@ -26,13 +27,14 @@ def read_mobility_motor_scooters():
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         for row in csv_reader:
-            if line_count==0:
+            if line_count == 0:
                 pass
             elif len(row) >= 2:
                 # Note: in this data set first column is unusually a longitude
                 long = row[0]
                 lat = row[1]
-                mobility_motor_scooters.append(PersonalTransport(type=type, company=company, lat=lat, long=long))
+                mobility_motor_scooters.append(
+                    PersonalTransport(type=type, company=company, lat=float(lat), long=float(long)))
             line_count += 1
 
         return mobility_motor_scooters

@@ -33,12 +33,13 @@ def renew_id():
     body = {"email": EMAIL}
 
     r = requests.post(url=LOGIN_ENDPOINT, json=body, headers=LOGIN_HEADERS)
+    print(r.text)
     response_json = json.loads(r.text)
     BIRD_ID = response_json["id"]
 
 
 # We want to renew ID once per request so we put it here in the global code
-renew_id()
+# renew_id()
 
 
 def bird_scooter_to_personal_transport(bird_scooter):
@@ -98,5 +99,6 @@ if __name__ == "__main__":
     hack_zurich_lat = 47.390229
     hack_zurich_long = 8.514694
 
+    # renew_id()
     flash_scooters = get_bird_scooters(hack_zurich_lat, hack_zurich_long)
     print(flash_scooters)

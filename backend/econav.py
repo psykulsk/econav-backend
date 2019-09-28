@@ -26,10 +26,7 @@ def directions():
     start_lat = request.args.get('start_lat', type=float)
     end_long = request.args.get('end_long', type=float)
     end_lat = request.args.get('end_lat', type=float)
-    try:
-        routes = get_routes_for_transport_types(start_lat, start_long, end_lat, end_long)
-    except TypeError:
-        return '', 400
+    routes = get_routes_for_transport_types(start_lat, start_long, end_lat, end_long)
     return jsonify(results=routes)
 
 

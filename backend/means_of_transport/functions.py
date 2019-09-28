@@ -11,7 +11,7 @@ def get_personal_transport_list(user_lat, user_long):
     personal_transport_list = []
     personal_transport_list.extend(get_flash_scooters(user_long=user_long, user_lat=user_lat))
     personal_transport_list.extend(get_publi_bike_stations())
-    personal_transport_list.extend(get_bird_scooters(user_lat, user_long))
+    # personal_transport_list.extend(get_bird_scooters(user_lat, user_long))
     personal_transport_list.extend(read_mobility_motor_scooters())
     return personal_transport_list
 

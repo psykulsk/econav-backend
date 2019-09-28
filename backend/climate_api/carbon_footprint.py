@@ -16,6 +16,16 @@ TRANSPORT_TYPE_TO_VEHICLE_TYPE = {
     TransportType.MOTOR_SCOOTER: "motor_scooter"
 }
 
+# in kg per meter
+TRANSPORT_TYPE_TO_CARBON_FOOTPRINT = {
+    TransportType.BIKE: 0.000021,
+    TransportType.E_BIKE: 0.000022,
+    TransportType.E_CAR: 0.000043,
+    TransportType.E_SCOOTER: 0.000025,
+    TransportType.WALK: 0.0,
+    TransportType.MOTOR_SCOOTER: 0.00008
+}
+
 
 def check_max(val, max, descr):
     if val > max:
