@@ -13,7 +13,7 @@ TRANSPORT_TYPE_TO_VEHICLE_TYPE = {
     TransportType.E_CAR: "electric_car",
     TransportType.E_SCOOTER: "electric_scooter",
     TransportType.WALK: "walk",
-    TransportType.MOTOR_SCOOTER: "motor_scooter"
+    TransportType.MOTOR_SCOOTER: "motor_scooter",
 }
 
 # in kg per meter
@@ -23,7 +23,25 @@ TRANSPORT_TYPE_TO_CARBON_FOOTPRINT = {
     TransportType.E_CAR: 0.000043,
     TransportType.E_SCOOTER: 0.000025,
     TransportType.WALK: 0.0,
-    TransportType.MOTOR_SCOOTER: 0.00008
+    TransportType.MOTOR_SCOOTER: 0.00008,
+    TransportType.RAIL: 0.00010,
+    TransportType.METRO_RAIL: 0.00010,
+    TransportType.SUBWAY: 0.00010,
+    TransportType.TRAM: 0.00010,
+    TransportType.MONORAIL: 0.00010,
+    TransportType.HEAVY_RAIL: 0.00010,
+    TransportType.COMMUTER_TRAIN: 0.00010,
+    TransportType.HIGH_SPEED_TRAIN: 0.00010,
+    TransportType.LONG_DISTANCE_TRAIN: 0.00010,
+    TransportType.BUS: 0.00010,
+    TransportType.INTERCITY_BUS: 0.00010,
+    TransportType.TROLLEYBUS: 0.00010,
+    TransportType.SHARE_TAXI: 0.00010,
+    TransportType.FERRY: 0.00010,
+    TransportType.CABLE_CAR: 0.00010,
+    TransportType.GONDOLA_LIFT: 0.00010,
+    TransportType.FUNICULAR: 0.00010,
+    TransportType.OTHER: 0.00010
 }
 
 
