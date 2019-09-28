@@ -2,7 +2,6 @@ import requests
 import json
 import logging
 
-from means_of_transport.transport_type_mapping import TRANSPORT_TYPE_TO_OUTPUT_TYPE
 from transport_type import TransportType
 from means_of_transport.personal_transport import PersonalTransport
 
@@ -12,9 +11,18 @@ FLASH_GET_ENDPOINT = 'https://api.goflash.com/api/Mobile/Scooters'
 def flash_scooter_to_personal_transport(flash_scooter_response_data):
     type = TransportType.E_SCOOTER
     company = 'flash'
-    lat = flash_scooter_response_data["location"]["latitude"]
-    long = flash_scooter_response_data["location"]["longitude"]
-    return PersonalTransport(type=type, company=company, long=long, lat=lat)
+    try:
+        lat = flash_scooter_response_data["location"]["latitude"]
+        long = flash_scooter_response_data["location"]["longitude"]
+        remainder_range = flash_scooter_response_data["RemainderRange"]
+    except (KeyError,TypeError) as err:
+        return None
+
+    try:
+        remainder_range_km = float(remainder_range.strip(" km"))
+    except ValueError as err:
+        return None
+    return PersonalTransport(type=type, company=company, long=long, lat=lat, remaining_range=remainder_range_km)
 
 
 def get_flash_scooters(user_lat, user_long):
@@ -35,9 +43,9 @@ def get_flash_scooters(user_lat, user_long):
         flash_scooters_response_list = response_json['Data']['Scooters']
         personal_transport_list = []
         for flash_scooter_response_data in flash_scooters_response_list:
-            personal_transport_list.append(
-                flash_scooter_to_personal_transport(flash_scooter_response_data)
-            )
+            pt = flash_scooter_to_personal_transport(flash_scooter_response_data)
+            if pt is not None:
+                personal_transport_list.append(pt)
         return personal_transport_list
 
 

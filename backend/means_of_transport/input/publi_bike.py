@@ -22,8 +22,6 @@ def publi_bike_to_personal_transport(publi_bike_station):
             return None
         elif int(state_id) != 1:
             return None
-
-
     type = TransportType.BIKE
     company = 'publi_bike'
     lat = publi_bike_station.get("latitude", None)
